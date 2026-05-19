@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba de usabilidad · Buk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background: #F0F1F3;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: #FFFFFF; border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      width: 100%; max-width: 500px;
+      overflow: hidden;
+    }
+
+    /* Header de la card */
+    .card__header {
+      background: #2F4DAA;
+      padding: 28px 40px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .card__body { padding: 32px 40px; }
+
+    .badge-study {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #EEF1FB; color: #2F4DAA;
+      font-size: 12px; font-weight: 700;
+      padding: 4px 10px; border-radius: 100px; margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 22px; font-weight: 700; color: #091351;
+      margin-bottom: 6px; line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 14px; color: #656668; margin-bottom: 24px;
+    }
+
+    /* Caja de tarea */
+    .task-box {
+      background: #EEF1FB; border-left: 3px solid #2F4DAA;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px; margin-bottom: 24px;
+    }
+    .task-box__label {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; color: #2F4DAA;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+    }
+    .task-box__text {
+      font-size: 14px; font-weight: 600; color: #242527; line-height: 1.5;
+    }
+    .task-box__detail {
+      font-size: 13px; color: #656668; margin-top: 6px; line-height: 1.4;
+    }
+
+    /* Divider */
+    .divider {
+      border: 0; border-top: 1px solid #E4E5E7; margin: 24px 0;
+    }
+
+    /* Formulario */
+    .section-label {
+      font-size: 13px; font-weight: 700; color: #797A7C;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block; font-size: 13px; color: #797A7C; margin-bottom: 4px;
+    }
+    .required-mark { color: #F95E50; margin-left: 2px; }
+    .form-input {
+      width: 100%; height: 40px; border: 1px solid #C1C2C4;
+      border-radius: 4px; padding: 0 12px; font-size: 14px;
+      font-family: 'Nunito Sans', sans-serif; color: #242527;
+      background: #FFFFFF; outline: none;
+    }
+    .form-input:focus { border: 1.5px solid #2F4DAA; }
+
+    /* Error state */
+    .form-input.error { border-color: #F95E50; }
+    .form-error { font-size: 12px; color: #F95E50; margin-top: 4px; display: none; }
+
+    /* Botón */
+    .btn-start {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; height: 44px;
+      background: #2F4DAA; color: #FFFFFF;
+      border: none; border-radius: 6px;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer; margin-top: 8px;
+      transition: background 0.15s;
+    }
+    .btn-start:hover { background: #223A92; }
+
+    /* Nota de privacidad */
+    .privacy-note {
+      text-align: center; font-size: 12px; color: #A3A4A5;
+      margin-top: 16px; line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <!-- Logo Buk (blanco sobre azul) -->
+    <div class="card__header">
+      <svg width="90" height="45" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.2 5.9H14.9V30.2C14.9 33 15.6 35.1 17 36.6C18.5 38.2 20.7 39.1 22.9 38.9C25.2 39 27.4 38.2 29 36.6C30.4 35.1 31.2 33 31.2 30.1C31.5 25.6 28.1 21.6 23.7 21.3C23.3 21.3 22.9 21.3 22.5 21.3C20.4 21.2 18.3 21.9 16.7 23.2V18.6C18.6 17.6 20.8 17 23 17C26.5 16.9 29.8 18.2 32.2 20.6C34.6 23 35.8 26.2 35.8 30.2C35.8 34.4 34.5 37.7 32 39.9C29.4 42.3 25.9 43.5 22.4 43.4C19 43.6 15.8 42.2 13.4 39.8C11.1 37.4 10 34.2 10 30.1V5.9H10.2Z" fill="white"/>
+        <path d="M62.6 43H53.5C49.6 43 46.8 42.4 45.1 41.2C43.7 40.4 42.7 39.1 42.2 37.6C41.8 35.7 41.5 33.9 41.6 31.9V17.5H46.3V31.7C46.3 32.4 46.3 32.9 46.4 33.3C46.5 33.9 46.6 34.5 46.7 35C46.9 35.6 47.2 36.2 47.6 36.7C48.1 37.2 48.6 37.6 49.3 37.9C50.1 38.2 51.1 38.4 52 38.4H58V17.5H62.6V43Z" fill="white"/>
+        <path d="M83.9 17.5H89.1L82.7 28.5C87 29.7 89.2 33.2 89.2 39.1V43H84.5V39.1C84.6 37.1 83.8 35 82.4 33.6C81 32.3 79 31.7 76.5 31.7C75.7 31.7 74.8 31.8 74 31.9V43H69.3V5.9H74V27.6C75.4 27.4 77 27.4 78.4 27.6L83.9 17.5Z" fill="white"/>
+        <path d="M5.1 24.7C5.1 26.1 4 27.2 2.6 27.2C1.2 27.2 0 26.1 0 24.7C0 23.3 1.1 22.2 2.5 22.2C3.9 22.2 5.1 23.3 5.1 24.7Z" fill="white"/>
+        <path d="M98 24.7C98 26.1 96.9 27.2 95.5 27.2C94.1 27.2 93 26.1 93 24.7C93 23.3 94.1 22.2 95.5 22.2C96.9 22.2 98 23.3 98 24.7Z" fill="white"/>
+      </svg>
+    </div>
+
+    <div class="card__body">
+
+      <!-- Badge + título -->
+      <div class="badge-study">
+        <span class="material-symbols-outlined" style="font-size:14px;">science</span>
+        Prueba de usabilidad
+      </div>
+      <h1>Bienvenido/a a esta sesión de testing</h1>
+      <p class="subtitle">Esta sesión dura aproximadamente 5 minutos. No hay respuestas correctas o incorrectas — evaluamos el producto, no a ti.</p>
+
+      <!-- Caja de tarea -->
+      <div class="task-box">
+        <div class="task-box__label">
+          <span class="material-symbols-outlined" style="font-size:14px;">task_alt</span>
+          Tu tarea
+        </div>
+        <p class="task-box__text">Crea una nueva automatización de workflow y completa el formulario para guardarla.</p>
+        <p class="task-box__detail">Usa la interfaz como lo harías normalmente. Puedes explorar lo que necesites antes de completar la tarea.</p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Formulario de identificación -->
+      <p class="section-label">¿Quién eres?</p>
+
+      <form id="participant-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="p-name">
+            Nombre <span class="required-mark">*</span>
+          </label>
+          <input
+            id="p-name" type="text" class="form-input"
+            placeholder="Tu nombre"
+            autocomplete="given-name"
+          >
+          <p class="form-error" id="err-name">Ingresa tu nombre para continuar.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="p-email">
+            Correo electrónico <span class="required-mark">*</span>
+          </label>
+          <input
+            id="p-email" type="email" class="form-input"
+            placeholder="tu@correo.com"
+            autocomplete="email"
+          >
+          <p class="form-error" id="err-email">Ingresa un correo válido para continuar.</p>
+        </div>
+
+        <button type="submit" class="btn-start">
+          Comenzar tarea
+          <span class="material-symbols-outlined" style="font-size:20px;">arrow_forward</span>
+        </button>
+      </form>
+
+      <p class="privacy-note">
+        Tu información solo se usa para identificar esta sesión de testing.<br>No se compartirá con terceros.
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('participant-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var name  = document.getElementById('p-name').value.trim();
+      var email = document.getElementById('p-email').value.trim();
+      var valid = true;
+
+      if (!name) {
+        document.getElementById('p-name').classList.add('error');
+        document.getElementById('err-name').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('p-name').classList.remove('error');
+        document.getElementById('err-name').style.display = 'none';
+      }
+      if (!email || !/\S+@\S+\.\S+/.test(email)) {
+        document.getElementById('p-email').classList.add('error');
+        document.getElementById('err-email').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('p-email').classList.remove('error');
+        document.getElementById('err-email').style.display = 'none';
+      }
+      if (!valid) return;
+
+      var now = Date.now();
+
+      // Inicializar sesión local
+      localStorage.setItem('ph_participant', JSON.stringify({ name: name, email: email }));
+      localStorage.setItem('ph_task_start',  now.toString());
+      localStorage.setItem('ph_misclicks',   '0');
+      localStorage.setItem('ph_events', JSON.stringify([{
+        timestamp:            new Date(now).toISOString(),
+        evento:               'task_started',
+        pantalla:             'intro',
+        participante_nombre:  name,
+        participante_email:   email,
+        tiempo_s:             0,
+        detalle:              'crear-automatizacion-workflow'
+      }]));
+
+      window.location.href = 'automatizaciones-index.html';
+    });
+  </script>
+
+</body>
+</html>

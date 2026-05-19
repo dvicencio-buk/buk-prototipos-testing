@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatizaciones · Workflow · Buk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600;6..12,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito Sans', sans-serif; background: #FAFCFD; }
+
+    /* ── Topbar ────────────────────────────────────────────── */
+    .buk-topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 980;
+      background: #FFFFFF; height: 60px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,0.30), 0 2px 5px 2px rgba(0,0,0,0.15);
+      display: flex; align-items: center; padding: 0 16px; gap: 8px;
+    }
+    .buk-topbar__left { display: flex; align-items: center; gap: 4px; flex: 1; }
+    .buk-topbar__right { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+    .buk-topbar__nav-link {
+      height: 44px; width: 44px; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      color: #2F4DAA; text-decoration: none; cursor: pointer; flex-shrink: 0;
+    }
+    .buk-topbar__nav-link:hover { background: #F0F1F3; }
+    .buk-topbar__search {
+      display: flex; align-items: center; background: #F6F7F9;
+      border: 1px solid #E4E5E7; border-radius: 4px; padding: 0 12px;
+      height: 36px; width: 280px; gap: 8px; margin-left: 8px;
+    }
+    .buk-topbar__search input {
+      border: none; background: transparent; outline: none;
+      font-family: 'Nunito Sans', sans-serif; font-size: 14px; color: #242527; width: 100%;
+    }
+    .buk-topbar__user {
+      height: 44px; padding: 0 8px 0 12px; border-radius: 4px;
+      display: flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer;
+    }
+    .buk-topbar__avatar {
+      width: 32px; height: 32px; border-radius: 50%; background: #2F4DAA;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+
+    /* ── Sidebar ───────────────────────────────────────────── */
+    .sb-wrap { position: fixed; top: 60px; left: 0; bottom: 0; z-index: 810; display: flex; }
+    .sb-rail { background: #223A92; width: 56px; display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; scrollbar-width: none; }
+    .sb-rail nav { padding: 8px 0; display: flex; flex-direction: column; }
+    .sb-rail-link {
+      height: 41px; width: 48px; border-radius: 6px 0 0 6px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 0 4px 8px; color: #FAFBFD; border-right: 3px solid transparent;
+      text-decoration: none; cursor: pointer;
+    }
+    .sb-rail-link.active { background: #172A7A; border-right-color: #F0F1F3; color: #FBCF60; }
+    .sb-panel { background: #2F4DAA; width: 236px; display: flex; flex-direction: column; }
+    .sb-logo { min-height: 90px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(217,226,249,0.19); padding: 0 24px; }
+    .sb-nav { flex: 1; overflow-y: auto; padding: 8px; scrollbar-width: none; }
+    .sb-item {
+      display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+      border-radius: 6px; color: #FAFBFD; cursor: pointer; text-decoration: none;
+      font-size: 14px; margin-bottom: 2px;
+    }
+    .sb-item.has-sub { justify-content: space-between; }
+    .sb-item-label { display: flex; align-items: center; gap: 10px; }
+    .sb-item:hover { background: #2A469D; }
+    .sb-item.active { background: #172A7A; color: #FBCF60; font-weight: 600; }
+    .sb-caret { font-size: 16px; opacity: 0.5; }
+    .sb-caret.open { opacity: 1; color: #FBCF60; }
+    .sb-subitem {
+      display: flex; align-items: center; padding: 7px 12px 7px 44px;
+      border-radius: 6px; color: #FAFBFD; text-decoration: none;
+      font-size: 14px; cursor: pointer; margin-bottom: 1px;
+    }
+    .sb-subitem:hover { background: #2A469D; }
+    .sb-subitem.active { background: #172A7A; color: #FBCF60; font-weight: 500; }
+
+    /* ── Layout ────────────────────────────────────────────── */
+    .main-content { margin-left: 292px; margin-top: 60px; padding-bottom: 52px; min-height: calc(100vh - 60px); }
+    .content { margin: 0 16px 36px 16px; }
+
+    /* ── Index header ──────────────────────────────────────── */
+    .fiji-main-header { position: sticky; top: 0; z-index: 6; background: #FAFCFD; }
+    .fiji-main-header__inner { display: flex; align-items: center; padding: 16px 0 8px; }
+    .fiji-main-header__title { font-size: 24px; font-weight: 700; color: #091351; margin: 0; }
+    .fiji-main-header__description { font-size: 14px; color: #797A7C; margin: 4px 0 0; }
+    .fiji-header-separator { margin: 0; border: 0; border-top: 1px solid #E4E5E7; }
+
+    /* ── Top menu ──────────────────────────────────────────── */
+    .fiji-top-menu { display: flex; align-items: center; gap: 8px; margin: 12px 0; }
+    .fiji-items-selector { display: flex; align-items: center; flex: 1; gap: 8px; }
+    .items-per-page-label { font-size: 14px; color: #797A7C; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+    .items-per-page-label select { font-size: 14px; color: #242527; border: 1px solid #E4E5E7; border-radius: 4px; padding: 2px 4px; }
+    .fiji-top-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex: 1; }
+    .btn-primary-fiji {
+      display: inline-flex; align-items: center; height: 36px; padding: 0 16px;
+      background: #2F4DAA; color: #fff; border: none; border-radius: 4px;
+      font-family: 'Nunito Sans', sans-serif; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+    }
+    .btn-icon-fiji {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 36px; width: 36px; background: transparent;
+      color: #2F4DAA; border: 1px solid #2F4DAA; border-radius: 4px; cursor: pointer;
+    }
+
+    /* ── Table header ──────────────────────────────────────── */
+    .fiji-table-header {
+      position: sticky; top: 0; z-index: 6; margin-bottom: -1px;
+      border: 1px solid #E4E5E7; border-radius: 8px 8px 0 0;
+      background: #FFFFFF; overflow: auto; scrollbar-width: none;
+    }
+    .fiji-table-header::-webkit-scrollbar { display: none; }
+    .fiji-table-header__row { display: flex; width: max-content; min-width: 100%; align-items: stretch; }
+    .fiji-table-header__column {
+      display: grid; grid-template-rows: 1fr 34px; padding: 8px 12px;
+      flex: 1; flex-shrink: 0; min-width: 180px; border-right: 1px solid #F0F1F3;
+    }
+    .fiji-table-header__column:last-child { border-right: none; }
+    .fiji-table-header__label { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; color: #212529; align-self: center; }
+    .fiji-table-header__input input,
+    .fiji-table-header__input select {
+      height: 28px; width: 100%; font-size: 12px; color: #797A7C;
+      border: 1px solid #C1C2C4; border-radius: 4px; padding: 0 8px;
+      background: #FFFFFF; outline: none; align-self: end;
+      font-family: 'Nunito Sans', sans-serif;
+    }
+    .fiji-table-header-actions {
+      position: sticky; right: 0; flex-grow: 0; flex-shrink: 0; min-width: 52px;
+      background: #FFFFFF; z-index: 2; border-left: 1px solid #F0F1F3;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── Tabla ─────────────────────────────────────────────── */
+    .table-responsive { border: 1px solid #E4E5E7; border-top: none; border-radius: 0 0 8px 8px; overflow-x: auto; }
+    .fiji-table {
+      width: max-content; min-width: 100%; background: #FFFFFF;
+      border-collapse: separate; border-spacing: 0;
+      font-family: 'Nunito Sans', sans-serif; font-size: 14px; color: #242527;
+    }
+    .fiji-table tbody tr { height: 46px; }
+    .fiji-table tbody td { padding: 0 12px; border-top: 1px solid #E4E5E7; vertical-align: middle; white-space: nowrap; }
+    .fiji-table tbody tr:hover td { background: #F6F7F9; }
+    .badge-chip { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 100px; font-size: 12px; font-weight: 600; }
+    .badge-success { background: #DDF7BF; color: #3A7A20; }
+    .badge-warning { background: #FDDD80; color: #A06010; }
+    .badge-danger  { background: #FFE0CD; color: #C04020; }
+
+    /* ── Paginador ─────────────────────────────────────────── */
+    .fiji-paginator { margin-top: 12px; }
+    ul.pagination { display: inline-flex; align-items: center; list-style: none; padding: 0; margin: 0; }
+    ul.pagination .page-item .page-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 32px; height: 32px; padding: 0 6px;
+      border: 1px solid #2F4DAA; border-right: none; color: #2F4DAA;
+      font-size: 12px; font-family: 'Nunito Sans', sans-serif;
+      text-decoration: none; cursor: pointer; background: #FFFFFF;
+    }
+    ul.pagination .page-item:first-child .page-link { border-radius: 4px 0 0 4px; }
+    ul.pagination .page-item:last-child .page-link { border-right: 1px solid #2F4DAA; border-radius: 0 4px 4px 0; }
+    ul.pagination .page-item.active .page-link { background: #2F4DAA; color: #FFFFFF; cursor: default; }
+    ul.pagination .page-item.disabled .page-link { border-color: #A3A4A5; color: #A3A4A5; cursor: default; border-right: none; }
+    ul.pagination .page-item.disabled:last-child .page-link { border-right: 1px solid #A3A4A5; }
+
+    /* ── Task bar (barra de tarea flotante) ────────────────── */
+    #task-bar {
+      position: fixed; bottom: 0; left: 292px; right: 0; z-index: 900;
+      background: #EEF1FB; border-top: 2px solid #2F4DAA;
+      padding: 0 20px; height: 44px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Nunito Sans', sans-serif; font-size: 13px; color: #2F4DAA;
+    }
+    #task-bar__left { display: flex; align-items: center; gap: 8px; }
+    #task-timer { font-weight: 700; font-size: 13px; color: #2F4DAA; min-width: 40px; text-align: right; }
+  </style>
+</head>
+<body>
+
+  <!-- ── TOPBAR ────────────────────────────────────────────── -->
+  <header class="buk-topbar">
+    <nav class="buk-topbar__left">
+      <a class="buk-topbar__nav-link"><span class="material-symbols-outlined" style="font-size:22px;">menu</span></a>
+      <div class="buk-topbar__search">
+        <span class="material-symbols-outlined" style="font-size:18px;color:#A3A4A5;">search</span>
+        <input type="text" placeholder="Buscar (Ctrl+B)">
+      </div>
+    </nav>
+    <nav class="buk-topbar__right">
+      <a class="buk-topbar__nav-link">
+        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6B4FBB,#2F4DAA);display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-outlined" style="font-size:18px;color:#fff;">auto_awesome</span>
+        </div>
+      </a>
+      <a class="buk-topbar__nav-link"><span class="material-symbols-outlined" style="font-size:22px;">visibility</span></a>
+      <a class="buk-topbar__nav-link"><span class="material-symbols-outlined" style="font-size:22px;">settings</span></a>
+      <a class="buk-topbar__nav-link" style="position:relative;">
+        <span class="material-symbols-outlined" style="font-size:22px;">notifications</span>
+        <span style="position:absolute;top:6px;right:4px;background:#F95E50;color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:1px 5px;min-width:16px;text-align:center;line-height:14px;">3</span>
+      </a>
+      <a class="buk-topbar__nav-link"><span class="material-symbols-outlined" style="font-size:22px;">campaign</span></a>
+      <a class="buk-topbar__nav-link"><span class="material-symbols-outlined" style="font-size:22px;">help</span></a>
+      <a class="buk-topbar__user">
+        <div class="buk-topbar__avatar" id="topbar-initials">?</div>
+        <span style="font-size:14px;color:#242527;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="topbar-name">Participante</span>
+      </a>
+    </nav>
+  </header>
+
+  <!-- ── SIDEBAR ───────────────────────────────────────────── -->
+  <aside class="sb-wrap">
+    <div class="sb-rail">
+      <nav>
+        <a class="sb-rail-link" title="Mi Empresa"><span class="material-symbols-outlined" style="font-size:20px;">home</span></a>
+        <a class="sb-rail-link active" title="Administrativo"><span class="material-symbols-outlined" style="font-size:20px;">pending_actions</span></a>
+        <a class="sb-rail-link" title="Remuneraciones"><span class="material-symbols-outlined" style="font-size:20px;">paid</span></a>
+        <a class="sb-rail-link" title="Control de Asistencia"><span class="material-symbols-outlined" style="font-size:20px;">schedule</span></a>
+        <a class="sb-rail-link" title="Desarrollo Organizacional"><span class="material-symbols-outlined" style="font-size:20px;">volunteer_activism</span></a>
+        <a class="sb-rail-link" title="Beneficios"><span class="material-symbols-outlined" style="font-size:20px;">card_giftcard</span></a>
+        <a class="sb-rail-link" title="Capacitaciones"><span class="material-symbols-outlined" style="font-size:20px;">school</span></a>
+        <a class="sb-rail-link" title="Reportería"><span class="material-symbols-outlined" style="font-size:20px;">folder</span></a>
+        <a class="sb-rail-link" title="Seguridad y Salud"><span class="material-symbols-outlined" style="font-size:20px;">admin_panel_settings</span></a>
+        <a class="sb-rail-link" title="Marketplace"><span class="material-symbols-outlined" style="font-size:20px;">store</span></a>
+        <a class="sb-rail-link" title="Buk Finanzas"><span class="material-symbols-outlined" style="font-size:20px;">account_balance</span></a>
+      </nav>
+    </div>
+    <div class="sb-panel">
+      <div class="sb-logo">
+        <!-- Logo Buk blanco inlineado -->
+        <svg width="110" height="55" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.2 5.9H14.9V30.2C14.9 33 15.6 35.1 17 36.6C18.5 38.2 20.7 39.1 22.9 38.9C25.2 39 27.4 38.2 29 36.6C30.4 35.1 31.2 33 31.2 30.1C31.5 25.6 28.1 21.6 23.7 21.3C23.3 21.3 22.9 21.3 22.5 21.3C20.4 21.2 18.3 21.9 16.7 23.2V18.6C18.6 17.6 20.8 17 23 17C26.5 16.9 29.8 18.2 32.2 20.6C34.6 23 35.8 26.2 35.8 30.2C35.8 34.4 34.5 37.7 32 39.9C29.4 42.3 25.9 43.5 22.4 43.4C19 43.6 15.8 42.2 13.4 39.8C11.1 37.4 10 34.2 10 30.1V5.9H10.2Z" fill="white"/>
+          <path d="M62.6 43H53.5C49.6 43 46.8 42.4 45.1 41.2C43.7 40.4 42.7 39.1 42.2 37.6C41.8 35.7 41.5 33.9 41.6 31.9V17.5H46.3V31.7C46.3 32.4 46.3 32.9 46.4 33.3C46.5 33.9 46.6 34.5 46.7 35C46.9 35.6 47.2 36.2 47.6 36.7C48.1 37.2 48.6 37.6 49.3 37.9C50.1 38.2 51.1 38.4 52 38.4H58V17.5H62.6V43Z" fill="white"/>
+          <path d="M83.9 17.5H89.1L82.7 28.5C87 29.7 89.2 33.2 89.2 39.1V43H84.5V39.1C84.6 37.1 83.8 35 82.4 33.6C81 32.3 79 31.7 76.5 31.7C75.7 31.7 74.8 31.8 74 31.9V43H69.3V5.9H74V27.6C75.4 27.4 77 27.4 78.4 27.6L83.9 17.5Z" fill="white"/>
+          <path d="M5.1 24.7C5.1 26.1 4 27.2 2.6 27.2C1.2 27.2 0 26.1 0 24.7C0 23.3 1.1 22.2 2.5 22.2C3.9 22.2 5.1 23.3 5.1 24.7Z" fill="white"/>
+          <path d="M98 24.7C98 26.1 96.9 27.2 95.5 27.2C94.1 27.2 93 26.1 93 24.7C93 23.3 94.1 22.2 95.5 22.2C96.9 22.2 98 23.3 98 24.7Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="sb-nav">
+        <a class="sb-item"><span class="material-symbols-outlined" style="font-size:18px;">poll</span>Panel de control</a>
+        <a class="sb-item has-sub"><span class="sb-item-label"><span class="material-symbols-outlined" style="font-size:18px;">badge</span>Colaboradores</span><span class="material-symbols-outlined sb-caret">chevron_right</span></a>
+        <a class="sb-item has-sub"><span class="sb-item-label"><span class="material-symbols-outlined" style="font-size:18px;">account_tree</span>Organización</span><span class="material-symbols-outlined sb-caret">chevron_right</span></a>
+        <a class="sb-item has-sub"><span class="sb-item-label"><span class="material-symbols-outlined" style="font-size:18px;">paid</span>Compensaciones</span><span class="material-symbols-outlined sb-caret">chevron_right</span></a>
+        <a class="sb-item has-sub"><span class="sb-item-label"><span class="material-symbols-outlined" style="font-size:18px;">graph_1</span>Workflow</span><span class="material-symbols-outlined sb-caret open">expand_less</span></a>
+        <a class="sb-subitem" href="#">Solicitudes</a>
+        <a class="sb-subitem" href="#">Plantillas</a>
+        <a class="sb-subitem active" href="automatizaciones-index.html">Automatizaciones</a>
+        <a class="sb-item has-sub"><span class="sb-item-label"><span class="material-symbols-outlined" style="font-size:18px;">event_available</span>Asistencia</span><span class="material-symbols-outlined sb-caret">chevron_right</span></a>
+        <a class="sb-item has-sub"><span class="sb-item-label"><span class="material-symbols-outlined" style="font-size:18px;">file_copy</span>Documentos y Firma</span><span class="material-symbols-outlined sb-caret">chevron_right</span></a>
+        <a class="sb-item has-sub"><span class="sb-item-label"><span class="material-symbols-outlined" style="font-size:18px;">fact_check</span>Onboarding</span><span class="material-symbols-outlined sb-caret">chevron_right</span></a>
+        <a class="sb-item has-sub"><span class="sb-item-label"><span class="material-symbols-outlined" style="font-size:18px;">inventory</span>Gestión de activos</span><span class="material-symbols-outlined sb-caret">chevron_right</span></a>
+        <a class="sb-item has-sub"><span class="sb-item-label"><span class="material-symbols-outlined" style="font-size:18px;">apps</span>Otros</span><span class="material-symbols-outlined sb-caret">chevron_right</span></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── CONTENIDO ─────────────────────────────────────────── -->
+  <div class="main-content">
+    <div class="content">
+
+      <div class="fiji-main-header">
+        <div class="fiji-main-header__inner">
+          <div>
+            <h2 class="fiji-main-header__title">Automatizaciones</h2>
+            <p class="fiji-main-header__description">Gestiona las automatizaciones configuradas para los flujos de trabajo de tu organización.</p>
+          </div>
+        </div>
+        <hr class="fiji-header-separator">
+      </div>
+
+      <div class="fiji-top-menu">
+        <button class="btn-icon-fiji" title="Filtros">
+          <span class="material-symbols-outlined" style="font-size:18px;">filter_alt</span>
+        </button>
+        <div class="fiji-items-selector">
+          <label class="items-per-page-label">Ver <select><option>25</option><option>50</option></select> de 3</label>
+          <div class="fiji-top-actions">
+            <button class="btn-icon-fiji" title="Exportar">
+              <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+            </button>
+            <!-- CTA principal — data-goal para tracking -->
+            <a class="btn-primary-fiji" href="automatizaciones-form.html" data-goal="cta_crear_automatizacion">Crear automatización</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fiji-table-header">
+        <div class="fiji-table-header__row">
+          <div class="fiji-table-header__column">
+            <div class="fiji-table-header__label">Nombre <span class="material-symbols-outlined" style="font-size:16px;color:#A3A4A5;">swap_vert</span></div>
+            <div class="fiji-table-header__input"><input type="text" placeholder="Buscar..."></div>
+          </div>
+          <div class="fiji-table-header__column">
+            <div class="fiji-table-header__label">Tipo de automatización</div>
+            <div class="fiji-table-header__input"><select><option value="">Todos</option><option>Notificación</option><option>Aprobación</option><option>Solicitud</option></select></div>
+          </div>
+          <div class="fiji-table-header__column">
+            <div class="fiji-table-header__label">Estado</div>
+            <div class="fiji-table-header__input"><select><option value="">Todos</option><option>Activa</option><option>Borrador</option><option>Inactiva</option></select></div>
+          </div>
+          <div class="fiji-table-header__column">
+            <div class="fiji-table-header__label">Última modificación <span class="material-symbols-outlined" style="font-size:16px;color:#A3A4A5;">swap_vert</span></div>
+            <div class="fiji-table-header__input"><input type="date"></div>
+          </div>
+          <div class="fiji-table-header-actions">
+            <button style="border:none;background:transparent;color:#A3A4A5;cursor:pointer;padding:4px;" title="Configurar columnas">
+              <span class="material-symbols-outlined" style="font-size:18px;">view_column</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="fiji-table">
+          <tbody>
+            <tr>
+              <td><a href="#" style="color:#2F4DAA;text-decoration:none;font-weight:500;">Notificación de bienvenida</a></td>
+              <td>Notificación</td>
+              <td><span class="badge-chip badge-success">Activa</span></td>
+              <td>12 may 2026</td>
+              <td style="text-align:right;">
+                <button style="border:none;background:transparent;color:#2F4DAA;cursor:pointer;"><span class="material-symbols-outlined" style="font-size:18px;">edit</span></button>
+                <button style="border:none;background:transparent;color:#C04020;cursor:pointer;"><span class="material-symbols-outlined" style="font-size:18px;">delete</span></button>
+              </td>
+            </tr>
+            <tr>
+              <td><a href="#" style="color:#2F4DAA;text-decoration:none;font-weight:500;">Aprobación de vacaciones</a></td>
+              <td>Aprobación</td>
+              <td><span class="badge-chip badge-warning">Borrador</span></td>
+              <td>8 may 2026</td>
+              <td style="text-align:right;">
+                <button style="border:none;background:transparent;color:#2F4DAA;cursor:pointer;"><span class="material-symbols-outlined" style="font-size:18px;">edit</span></button>
+                <button style="border:none;background:transparent;color:#C04020;cursor:pointer;"><span class="material-symbols-outlined" style="font-size:18px;">delete</span></button>
+              </td>
+            </tr>
+            <tr>
+              <td><a href="#" style="color:#2F4DAA;text-decoration:none;font-weight:500;">Recordatorio de cumpleaños</a></td>
+              <td>Notificación</td>
+              <td><span class="badge-chip badge-danger">Inactiva</span></td>
+              <td>3 abr 2026</td>
+              <td style="text-align:right;">
+                <button style="border:none;background:transparent;color:#2F4DAA;cursor:pointer;"><span class="material-symbols-outlined" style="font-size:18px;">edit</span></button>
+                <button style="border:none;background:transparent;color:#C04020;cursor:pointer;"><span class="material-symbols-outlined" style="font-size:18px;">delete</span></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="fiji-paginator">
+        <ul class="pagination">
+          <li class="page-item disabled"><a class="page-link"><span class="material-symbols-outlined" style="font-size:16px;">chevron_left</span></a></li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item disabled"><a class="page-link"><span class="material-symbols-outlined" style="font-size:16px;">chevron_right</span></a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Barra de tarea flotante ───────────────────────────── -->
+  <div id="task-bar">
+    <div id="task-bar__left">
+      <span class="material-symbols-outlined" style="font-size:16px;">task_alt</span>
+      <span><strong>Tu tarea:</strong> Crea una nueva automatización de workflow completando el formulario.</span>
+    </div>
+    <span id="task-timer">0:00</span>
+  </div>
+
+  <script>
+    // ── Tracker local ───────────────────────────────────────
+    var SCREEN = 'index';
+
+    function getElapsed() {
+      return Math.round((Date.now() - parseInt(localStorage.getItem('ph_task_start') || Date.now())) / 1000);
+    }
+
+    function trackEvent(eventName, detalle) {
+      var p = JSON.parse(localStorage.getItem('ph_participant') || '{}');
+      var events = JSON.parse(localStorage.getItem('ph_events') || '[]');
+      events.push({
+        timestamp:           new Date().toISOString(),
+        evento:              eventName,
+        pantalla:            SCREEN,
+        participante_nombre: p.name  || '',
+        participante_email:  p.email || '',
+        tiempo_s:            getElapsed(),
+        detalle:             detalle || ''
+      });
+      localStorage.setItem('ph_events', JSON.stringify(events));
+    }
+
+    // ── Restaurar participante ──────────────────────────────
+    var participant = JSON.parse(localStorage.getItem('ph_participant') || '{}');
+    if (participant.name) {
+      var initials = participant.name.split(' ').map(function(w){ return w[0]; }).join('').substring(0,2).toUpperCase();
+      document.getElementById('topbar-initials').textContent = initials;
+      document.getElementById('topbar-name').textContent = participant.name.split(' ')[0];
+    }
+
+    // ── Screen view ─────────────────────────────────────────
+    trackEvent('screen_viewed');
+
+    // ── Timer ───────────────────────────────────────────────
+    function updateTimer() {
+      var e = getElapsed();
+      var el = document.getElementById('task-timer');
+      if (el) el.textContent = Math.floor(e/60) + ':' + (e%60 < 10 ? '0' : '') + (e%60);
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // ── Click tracking ──────────────────────────────────────
+    var misclickCount = parseInt(localStorage.getItem('ph_misclicks') || '0');
+
+    document.addEventListener('click', function(e) {
+      var goalEl    = e.target.closest('[data-goal]');
+      var isControl = e.target.closest('input, select, label, .buk-topbar, .sb-wrap, #task-bar');
+
+      if (goalEl) {
+        trackEvent('goal_clicked', goalEl.dataset.goal);
+      } else if (!isControl) {
+        misclickCount++;
+        localStorage.setItem('ph_misclicks', misclickCount.toString());
+        var txt = (e.target.textContent || '').trim().substring(0, 60);
+        trackEvent('misclick', e.target.tagName + (txt ? ':' + txt : ''));
+      }
+    }, true);
+
+    // ── Sync scroll tabla ───────────────────────────────────
+    (function() {
+      var h = document.querySelector('.fiji-table-header');
+      var b = document.querySelector('.table-responsive');
+      if (h && b) {
+        b.addEventListener('scroll', function(){ h.scrollLeft = b.scrollLeft; });
+        h.addEventListener('scroll', function(){ b.scrollLeft = h.scrollLeft; });
+      }
+    })();
+  </script>
+
+</body>
+</html>
