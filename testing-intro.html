@@ -230,6 +230,8 @@
       var now = Date.now();
 
       // Inicializar sesión local
+      if (window.clarity) clarity('identify', email, null, null, name);
+
       localStorage.setItem('ph_participant', JSON.stringify({ name: name, email: email }));
       localStorage.setItem('ph_task_start',  now.toString());
       localStorage.setItem('ph_misclicks',   '0');
