@@ -291,7 +291,7 @@
       </div>
       <p class="success-card__body">
         Gracias por participar en esta prueba de usabilidad.<br>
-        Los datos de tu sesión se han descargado como archivo CSV.
+        Tu sesión ha sido registrada correctamente.
       </p>
       <button class="btn-close-session" onclick="localStorage.removeItem('ph_participant'); localStorage.removeItem('ph_task_start'); localStorage.removeItem('ph_misclicks'); localStorage.removeItem('ph_events'); window.location.href='testing-intro.html';">
         Finalizar sesión
@@ -325,31 +325,37 @@
       localStorage.setItem('ph_events', JSON.stringify(events));
     }
 
-    function downloadCSV() {
-      var events = JSON.parse(localStorage.getItem('ph_events') || '[]');
-      var p = JSON.parse(localStorage.getItem('ph_participant') || '{}');
-      var cols = ['timestamp','evento','pantalla','participante_nombre','participante_email','tiempo_s','detalle'];
+    var GITHUB_TOKEN = 'github_pat_11BKXU5FY0FlGypa16qk1r_' + 'd3gikagrC1psS4j64Up2icvnCqkV09fxPT1LKxlKy4EE3PZXPY3VQ6CVM5x';
+    var GITHUB_REPO  = 'dvicencio-buk/buk-prototipos-testing';
 
+    function buildCSV() {
+      var events = JSON.parse(localStorage.getItem('ph_events') || '[]');
+      var cols = ['timestamp','evento','pantalla','participante_nombre','participante_email','tiempo_s','detalle'];
       function esc(val) {
         var s = String(val === null || val === undefined ? '' : val);
         return (s.includes(',') || s.includes('"') || s.includes('\n'))
           ? '"' + s.replace(/"/g, '""') + '"' : s;
       }
-
-      var csv = cols.join(',') + '\n' +
+      return cols.join(',') + '\n' +
         events.map(function(e) { return cols.map(function(c){ return esc(e[c]); }).join(','); }).join('\n');
+    }
 
-      var blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
-      var url  = URL.createObjectURL(blob);
-      var a    = document.createElement('a');
-      a.href   = url;
+    function getFilename() {
+      var p    = JSON.parse(localStorage.getItem('ph_participant') || '{}');
       var slug = (p.email || 'sesion').split('@')[0];
-      var date = new Date().toISOString().slice(0,10).replace(/-/g,'');
-      a.download = 'sesion_' + slug + '_' + date + '.csv';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      var ts   = new Date().toISOString().slice(0,19).replace(/[-:T]/g,'');
+      return 'sesion_' + slug + '_' + ts + '.csv';
+    }
+
+    function saveToGitHub(csvContent, filename, callback) {
+      var encoded = btoa(unescape(encodeURIComponent(csvContent)));
+      fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/data/' + filename, {
+        method: 'PUT',
+        headers: { 'Authorization': 'Bearer ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Sesión: ' + filename, content: encoded })
+      })
+      .then(function(r) { if (callback) callback(r.ok); })
+      .catch(function()  { if (callback) callback(false); });
     }
 
     // ── Restaurar participante ──────────────────────────────
@@ -398,7 +404,7 @@
       }
     }, true);
 
-    // ── Guardar: task_completed + descarga CSV ──────────────
+    // ── Guardar: task_completed → sube CSV a GitHub ─────────
     document.getElementById('btn-guardar').addEventListener('click', function() {
       var elapsed   = getElapsed();
       var misclicks = parseInt(localStorage.getItem('ph_misclicks') || '0');
@@ -406,7 +412,7 @@
       trackEvent('task_completed',
         'tiempo:' + elapsed + 's|misclicks:' + misclicks + '|exito:true');
 
-      downloadCSV();
+      saveToGitHub(buildCSV(), getFilename());
 
       document.getElementById('final-time').textContent = formatTime(elapsed);
       document.getElementById('final-misclicks').innerHTML =
@@ -415,13 +421,19 @@
       document.getElementById('success-overlay').classList.add('visible');
     });
 
-    // ── Volver: task_abandoned + descarga CSV ───────────────
-    function trackAbandoned() {
+    // ── Volver: task_abandoned → sube CSV a GitHub ──────────
+    function trackAbandoned(e) {
+      e.preventDefault();
+      var href      = e.currentTarget.getAttribute('href') || 'automatizaciones-index.html';
       var elapsed   = getElapsed();
       var misclicks = parseInt(localStorage.getItem('ph_misclicks') || '0');
       trackEvent('task_abandoned',
         'tiempo:' + elapsed + 's|misclicks:' + misclicks + '|exito:false');
-      downloadCSV();
+
+      var navigated = false;
+      function go() { if (!navigated) { navigated = true; window.location.href = href; } }
+      saveToGitHub(buildCSV(), getFilename(), go);
+      setTimeout(go, 4000); // fallback por si falla la red
     }
     document.getElementById('btn-volver').addEventListener('click', trackAbandoned);
     document.getElementById('btn-volver-footer').addEventListener('click', trackAbandoned);
