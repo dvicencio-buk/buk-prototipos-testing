@@ -1,0 +1,5 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-19T20:59:03.282Z,task_started,intro,dino 4,askdjfsi@jsabdsa.com,0,crear-automatizacion-workflow
+2026-05-19T20:59:03.658Z,screen_viewed,index,dino 4,askdjfsi@jsabdsa.com,0,
+2026-05-19T20:59:05.234Z,goal_clicked,index,dino 4,askdjfsi@jsabdsa.com,2,cta_crear_automatizacion
+2026-05-19T20:59:05.562Z,task_interrupted,index,dino 4,askdjfsi@jsabdsa.com,2,session_closed
