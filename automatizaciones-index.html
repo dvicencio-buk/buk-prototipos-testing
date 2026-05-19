@@ -448,6 +448,31 @@
         h.addEventListener('scroll', function(){ b.scrollLeft = h.scrollLeft; });
       }
     })();
+
+    // ── Autosave al cerrar / navegar fuera ──────────────────
+    window.addEventListener('pagehide', function() {
+      var events = JSON.parse(localStorage.getItem('ph_events') || '[]');
+      if (!events.length) return;
+      var last = events[events.length - 1].evento;
+      if (last === 'task_completed' || last === 'task_abandoned' || last === 'task_interrupted') return;
+
+      var p       = JSON.parse(localStorage.getItem('ph_participant') || '{}');
+      var elapsed = Math.round((Date.now() - parseInt(localStorage.getItem('ph_task_start') || Date.now())) / 1000);
+      events.push({ timestamp: new Date().toISOString(), evento: 'task_interrupted', pantalla: SCREEN,
+        participante_nombre: p.name || '', participante_email: p.email || '', tiempo_s: elapsed, detalle: 'session_closed' });
+
+      var cols = ['timestamp','evento','pantalla','participante_nombre','participante_email','tiempo_s','detalle'];
+      function esc(v) { var s = String(v == null ? '' : v); return (s.includes(',') || s.includes('"') || s.includes('\n')) ? '"' + s.replace(/"/g,'""') + '"' : s; }
+      var csv = cols.join(',') + '\n' + events.map(function(e){ return cols.map(function(c){ return esc(e[c]); }).join(','); }).join('\n');
+
+      var slug = (p.email || 'sesion').split('@')[0];
+      var ts   = new Date().toISOString().slice(0,19).replace(/[-:T]/g,'');
+      fetch('https://api.github.com/repos/dvicencio-buk/buk-prototipos-testing/contents/data/sesion_' + slug + '_interrupted_' + ts + '.csv', {
+        method: 'PUT', keepalive: true,
+        headers: { 'Authorization': 'Bearer ' + 'github_pat_11BKXU5FY0FlGypa16qk1r_' + 'd3gikagrC1psS4j64Up2icvnCqkV09fxPT1LKxlKy4EE3PZXPY3VQ6CVM5x', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Interrupted: ' + slug, content: btoa(unescape(encodeURIComponent(csv))) })
+      });
+    });
   </script>
 
 </body>
