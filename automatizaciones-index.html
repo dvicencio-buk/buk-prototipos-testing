@@ -465,9 +465,11 @@
       function esc(v) { var s = String(v == null ? '' : v); return (s.includes(',') || s.includes('"') || s.includes('\n')) ? '"' + s.replace(/"/g,'""') + '"' : s; }
       var csv = cols.join(',') + '\n' + events.map(function(e){ return cols.map(function(c){ return esc(e[c]); }).join(','); }).join('\n');
 
-      var slug = (p.email || 'sesion').split('@')[0];
-      var ts   = new Date().toISOString().slice(0,19).replace(/[-:T]/g,'');
-      fetch('https://api.github.com/repos/dvicencio-buk/buk-prototipos-testing/contents/data/sesion_' + slug + '_interrupted_' + ts + '.csv', {
+      var email = (p.email || 'sin-correo').replace('@', '-').replace(/\./g, '-');
+      var cl    = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Santiago' }));
+      var ts    = cl.getFullYear() + String(cl.getMonth()+1).padStart(2,'0') + String(cl.getDate()).padStart(2,'0') + '-' + String(cl.getHours()).padStart(2,'0') + String(cl.getMinutes()).padStart(2,'0');
+      var fname = 'creacion-workflow_' + email + '_' + ts + '_interrupted.csv';
+      fetch('https://api.github.com/repos/dvicencio-buk/buk-prototipos-testing/contents/data/' + fname, {
         method: 'PUT', keepalive: true,
         headers: { 'Authorization': 'Bearer ' + 'github_pat_11BKXU5FY0FlGypa16qk1r_' + 'd3gikagrC1psS4j64Up2icvnCqkV09fxPT1LKxlKy4EE3PZXPY3VQ6CVM5x', 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: 'Interrupted: ' + slug, content: btoa(unescape(encodeURIComponent(csv))) })

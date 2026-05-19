@@ -340,12 +340,24 @@
         events.map(function(e) { return cols.map(function(c){ return esc(e[c]); }).join(','); }).join('\n');
     }
 
-    function getFilename() {
-      var p    = JSON.parse(localStorage.getItem('ph_participant') || '{}');
-      var slug = (p.email || 'sesion').split('@')[0];
-      var ts   = new Date().toISOString().slice(0,19).replace(/[-:T]/g,'');
-      return 'sesion_' + slug + '_' + ts + '.csv';
+    var TEST_NAME = 'creacion-workflow';
+
+    function clTimestamp() {
+      var cl = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Santiago' }));
+      return cl.getFullYear()
+        + String(cl.getMonth()+1).padStart(2,'0')
+        + String(cl.getDate()).padStart(2,'0')
+        + '-'
+        + String(cl.getHours()).padStart(2,'0')
+        + String(cl.getMinutes()).padStart(2,'0');
     }
+
+    function buildFilename(suffix) {
+      var p     = JSON.parse(localStorage.getItem('ph_participant') || '{}');
+      var email = (p.email || 'sin-correo').replace('@', '-').replace(/\./g, '-');
+      return TEST_NAME + '_' + email + '_' + clTimestamp() + (suffix ? '_' + suffix : '') + '.csv';
+    }
+    function getFilename() { return buildFilename(); }
 
     function saveToGitHub(csvContent, filename, callback) {
       var encoded = btoa(unescape(encodeURIComponent(csvContent)));
@@ -451,9 +463,8 @@
         participante_nombre: p.name || '', participante_email: p.email || '', tiempo_s: elapsed, detalle: 'session_closed' });
       localStorage.setItem('ph_events', JSON.stringify(events));
 
-      var slug = (p.email || 'sesion').split('@')[0];
-      var ts   = new Date().toISOString().slice(0,19).replace(/[-:T]/g,'');
-      fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/data/sesion_' + slug + '_interrupted_' + ts + '.csv', {
+      var fname = buildFilename('interrupted');
+      fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/data/' + fname, {
         method: 'PUT', keepalive: true,
         headers: { 'Authorization': 'Bearer ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: 'Interrupted: ' + slug, content: btoa(unescape(encodeURIComponent(buildCSV()))) })
