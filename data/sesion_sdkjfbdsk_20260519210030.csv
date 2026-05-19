@@ -1,0 +1,9 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-19T21:00:23.990Z,task_started,intro,asdasld,sdkjfbdsk@sdkljnfds.com,0,crear-automatizacion-workflow
+2026-05-19T21:00:24.308Z,screen_viewed,index,asdasld,sdkjfbdsk@sdkljnfds.com,0,
+2026-05-19T21:00:25.280Z,misclick,index,asdasld,sdkjfbdsk@sdkljnfds.com,1,A:Recordatorio de cumpleaños
+2026-05-19T21:00:25.937Z,goal_clicked,index,asdasld,sdkjfbdsk@sdkljnfds.com,2,cta_crear_automatizacion
+2026-05-19T21:00:26.223Z,screen_viewed,form,asdasld,sdkjfbdsk@sdkljnfds.com,2,
+2026-05-19T21:00:26.829Z,field_interacted,form,asdasld,sdkjfbdsk@sdkljnfds.com,3,f-nombre
+2026-05-19T21:00:28.660Z,field_interacted,form,asdasld,sdkjfbdsk@sdkljnfds.com,5,f-tipo
+2026-05-19T21:00:30.407Z,task_completed,form,asdasld,sdkjfbdsk@sdkljnfds.com,6,tiempo:6s|misclicks:1|exito:true
