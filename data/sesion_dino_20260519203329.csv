@@ -1,0 +1,15 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-19T20:33:17.745Z,task_started,intro,Dino,dino@buk.cl,0,crear-automatizacion-workflow
+2026-05-19T20:33:18.082Z,screen_viewed,index,Dino,dino@buk.cl,0,
+2026-05-19T20:33:19.302Z,misclick,index,Dino,dino@buk.cl,2,A:Notificación de bienvenida
+2026-05-19T20:33:19.700Z,misclick,index,Dino,dino@buk.cl,2,TD:Aprobación de vacaciones
+2026-05-19T20:33:20.122Z,misclick,index,Dino,dino@buk.cl,2,A:Aprobación de vacaciones
+2026-05-19T20:33:20.648Z,misclick,index,Dino,dino@buk.cl,3,A:Recordatorio de cumpleaños
+2026-05-19T20:33:21.986Z,misclick,index,Dino,dino@buk.cl,4,SPAN:edit
+2026-05-19T20:33:22.364Z,misclick,index,Dino,dino@buk.cl,5,SPAN:edit
+2026-05-19T20:33:22.776Z,misclick,index,Dino,dino@buk.cl,5,SPAN:edit
+2026-05-19T20:33:23.468Z,goal_clicked,index,Dino,dino@buk.cl,6,cta_crear_automatizacion
+2026-05-19T20:33:23.778Z,screen_viewed,form,Dino,dino@buk.cl,6,
+2026-05-19T20:33:24.978Z,field_interacted,form,Dino,dino@buk.cl,7,f-nombre
+2026-05-19T20:33:26.517Z,field_interacted,form,Dino,dino@buk.cl,9,f-tipo
+2026-05-19T20:33:29.007Z,task_completed,form,Dino,dino@buk.cl,11,tiempo:11s|misclicks:7|exito:true
