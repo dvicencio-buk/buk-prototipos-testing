@@ -1,0 +1,21 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-19T20:42:53.549Z,task_started,intro,Dino,dvicencio@buk.cl,0,crear-automatizacion-workflow
+2026-05-19T20:42:53.985Z,screen_viewed,index,Dino,dvicencio@buk.cl,0,
+2026-05-19T20:42:59.332Z,misclick,index,Dino,dvicencio@buk.cl,6,A:Notificación de bienvenida
+2026-05-19T20:42:59.798Z,misclick,index,Dino,dvicencio@buk.cl,6,A:Aprobación de vacaciones
+2026-05-19T20:43:00.298Z,misclick,index,Dino,dvicencio@buk.cl,7,A:Recordatorio de cumpleaños
+2026-05-19T20:43:01.130Z,misclick,index,Dino,dvicencio@buk.cl,8,SPAN:Activa
+2026-05-19T20:43:02.198Z,misclick,index,Dino,dvicencio@buk.cl,9,SPAN:edit
+2026-05-19T20:43:02.693Z,misclick,index,Dino,dvicencio@buk.cl,9,SPAN:delete
+2026-05-19T20:43:03.030Z,misclick,index,Dino,dvicencio@buk.cl,9,"DIV:Automatizaciones
+            Gestiona las automatizaciones c"
+2026-05-19T20:43:06.913Z,goal_clicked,index,Dino,dvicencio@buk.cl,13,cta_crear_automatizacion
+2026-05-19T20:43:07.212Z,screen_viewed,form,Dino,dvicencio@buk.cl,14,
+2026-05-19T20:43:07.746Z,field_interacted,form,Dino,dvicencio@buk.cl,14,f-nombre
+2026-05-19T20:43:08.820Z,field_interacted,form,Dino,dvicencio@buk.cl,15,f-tipo
+2026-05-19T20:43:11.250Z,misclick,form,Dino,dvicencio@buk.cl,18,"DIV:arrow_back
+            Volver
+          
+          
+        "
+2026-05-19T20:43:11.915Z,task_completed,form,Dino,dvicencio@buk.cl,18,tiempo:18s|misclicks:8|exito:true
