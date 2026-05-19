@@ -1,0 +1,9 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-19T20:59:22.385Z,task_started,intro,asdasdasd,dsljfhsi@gmail.com,0,crear-automatizacion-workflow
+2026-05-19T20:59:22.453Z,screen_viewed,index,asdasdasd,dsljfhsi@gmail.com,0,
+2026-05-19T20:59:23.319Z,misclick,index,asdasdasd,dsljfhsi@gmail.com,1,TD:Notificación de bienvenida
+2026-05-19T20:59:23.635Z,misclick,index,asdasdasd,dsljfhsi@gmail.com,1,TD:Aprobación de vacaciones
+2026-05-19T20:59:24.327Z,goal_clicked,index,asdasdasd,dsljfhsi@gmail.com,2,cta_crear_automatizacion
+2026-05-19T20:59:24.364Z,screen_viewed,form,asdasdasd,dsljfhsi@gmail.com,2,
+2026-05-19T20:59:25.487Z,field_interacted,form,asdasdasd,dsljfhsi@gmail.com,3,f-nombre
+2026-05-19T20:59:26.627Z,task_completed,form,asdasdasd,dsljfhsi@gmail.com,4,tiempo:4s|misclicks:2|exito:true
