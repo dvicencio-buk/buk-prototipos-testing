@@ -1,0 +1,28 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-19T20:58:27.280Z,task_started,intro,Dino 3,sahdaksbdj@sdknfiosd.com,0,crear-automatizacion-workflow
+2026-05-19T20:58:27.611Z,screen_viewed,index,Dino 3,sahdaksbdj@sdknfiosd.com,0,
+2026-05-19T20:58:29.447Z,misclick,index,Dino 3,sahdaksbdj@sdknfiosd.com,2,SPAN:filter_alt
+2026-05-19T20:58:29.618Z,misclick,index,Dino 3,sahdaksbdj@sdknfiosd.com,2,"DIV:filter_alt
+        
+        
+          Ver 2550 de 3
+       "
+2026-05-19T20:58:29.828Z,misclick,index,Dino 3,sahdaksbdj@sdknfiosd.com,3,P:Gestiona las automatizaciones configuradas para los flujos d
+2026-05-19T20:58:30.030Z,misclick,index,Dino 3,sahdaksbdj@sdknfiosd.com,3,"DIV:Automatizaciones
+            Gestiona las automatizaciones c"
+2026-05-19T20:58:30.233Z,misclick,index,Dino 3,sahdaksbdj@sdknfiosd.com,3,"DIV:Automatizaciones
+            Gestiona las automatizaciones c"
+2026-05-19T20:58:30.999Z,misclick,index,Dino 3,sahdaksbdj@sdknfiosd.com,4,SPAN:download
+2026-05-19T20:58:31.763Z,misclick,index,Dino 3,sahdaksbdj@sdknfiosd.com,4,TD:Notificación de bienvenida
+2026-05-19T20:58:32.055Z,misclick,index,Dino 3,sahdaksbdj@sdknfiosd.com,5,A:Aprobación de vacaciones
+2026-05-19T20:58:32.320Z,misclick,index,Dino 3,sahdaksbdj@sdknfiosd.com,5,TD:Recordatorio de cumpleaños
+2026-05-19T20:58:33.090Z,goal_clicked,index,Dino 3,sahdaksbdj@sdknfiosd.com,6,cta_crear_automatizacion
+2026-05-19T20:58:33.387Z,screen_viewed,form,Dino 3,sahdaksbdj@sdknfiosd.com,6,
+2026-05-19T20:58:34.464Z,field_interacted,form,Dino 3,sahdaksbdj@sdknfiosd.com,7,f-nombre
+2026-05-19T20:58:35.065Z,field_interacted,form,Dino 3,sahdaksbdj@sdknfiosd.com,8,f-tipo
+2026-05-19T20:58:37.570Z,misclick,form,Dino 3,sahdaksbdj@sdknfiosd.com,10,"DIV:arrow_back
+            Volver
+          
+          
+        "
+2026-05-19T20:58:38.100Z,task_completed,form,Dino 3,sahdaksbdj@sdknfiosd.com,11,tiempo:11s|misclicks:10|exito:true
