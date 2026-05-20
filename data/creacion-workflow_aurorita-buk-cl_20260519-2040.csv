@@ -1,0 +1,8 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-20T00:40:09.712Z,task_started,intro,Aurorita,aurorita@buk.cl,0,crear-automatizacion-workflow
+2026-05-20T00:40:10.043Z,screen_viewed,index,Aurorita,aurorita@buk.cl,0,
+2026-05-20T00:40:19.256Z,goal_clicked,index,Aurorita,aurorita@buk.cl,10,cta_crear_automatizacion
+2026-05-20T00:40:19.579Z,screen_viewed,form,Aurorita,aurorita@buk.cl,10,
+2026-05-20T00:40:20.510Z,field_interacted,form,Aurorita,aurorita@buk.cl,11,f-nombre
+2026-05-20T00:40:25.569Z,field_interacted,form,Aurorita,aurorita@buk.cl,16,f-tipo
+2026-05-20T00:40:27.500Z,task_completed,form,Aurorita,aurorita@buk.cl,18,tiempo:18s|misclicks:0|exito:true
