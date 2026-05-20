@@ -1,0 +1,15 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-20T15:13:39.588Z,screen_viewed,index,,,0,
+2026-05-20T15:13:45.649Z,goal_clicked,index,,,0,cta_crear_automatizacion
+2026-05-20T15:13:45.674Z,screen_viewed,form,,,0,
+2026-05-20T15:13:46.594Z,field_interacted,form,,,0,f-nombre
+2026-05-20T15:13:47.480Z,field_interacted,form,,,0,f-tipo
+2026-05-20T15:13:50.539Z,misclick,form,,,0,"DIV:Los campos con * son obligatorios.
+
+            
+           "
+2026-05-20T15:13:51.365Z,misclick,form,,,0,"DIV:Los campos con * son obligatorios.
+
+            
+           "
+2026-05-20T15:13:53.997Z,task_completed,form,,,0,tiempo:0s|misclicks:2|exito:true
