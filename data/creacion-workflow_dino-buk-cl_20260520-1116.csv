@@ -1,0 +1,30 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-20T15:15:19.846Z,task_started,intro,Dino,dino@buk.cl,0,crear-automatizacion-workflow
+2026-05-20T15:15:20.142Z,screen_viewed,index,Dino,dino@buk.cl,0,
+2026-05-20T15:15:32.520Z,misclick,index,Dino,dino@buk.cl,13,"DIV:Automatizaciones
+            Gestiona las automatizaciones c"
+2026-05-20T15:15:40.815Z,misclick,index,Dino,dino@buk.cl,21,"DIV:chevron_left
+          1
+          chevron_right"
+2026-05-20T15:15:45.532Z,misclick,index,Dino,dino@buk.cl,26,A:Notificación de bienvenida
+2026-05-20T15:15:45.892Z,misclick,index,Dino,dino@buk.cl,26,TD:Aprobación de vacaciones
+2026-05-20T15:15:46.968Z,misclick,index,Dino,dino@buk.cl,27,A:Recordatorio de cumpleaños
+2026-05-20T15:15:47.977Z,misclick,index,Dino,dino@buk.cl,28,SPAN:edit
+2026-05-20T15:15:48.473Z,misclick,index,Dino,dino@buk.cl,29,SPAN:edit
+2026-05-20T15:15:48.840Z,misclick,index,Dino,dino@buk.cl,29,SPAN:delete
+2026-05-20T15:15:49.200Z,misclick,index,Dino,dino@buk.cl,29,SPAN:delete
+2026-05-20T15:15:49.524Z,misclick,index,Dino,dino@buk.cl,30,SPAN:edit
+2026-05-20T15:15:50.266Z,misclick,index,Dino,dino@buk.cl,30,SPAN:filter_alt
+2026-05-20T15:15:53.198Z,misclick,index,Dino,dino@buk.cl,33,A:chevron_right
+2026-05-20T15:16:13.028Z,goal_clicked,index,Dino,dino@buk.cl,53,cta_crear_automatizacion
+2026-05-20T15:16:13.314Z,screen_viewed,form,Dino,dino@buk.cl,53,
+2026-05-20T15:16:14.161Z,field_interacted,form,Dino,dino@buk.cl,54,f-nombre
+2026-05-20T15:16:14.751Z,misclick,form,Dino,dino@buk.cl,55,"DIV:Los campos con * son obligatorios.
+
+            
+           "
+2026-05-20T15:16:14.979Z,misclick,form,Dino,dino@buk.cl,55,"DIV:Los campos con * son obligatorios.
+
+            
+           "
+2026-05-20T15:16:15.475Z,task_abandoned,form,Dino,dino@buk.cl,56,tiempo:56s|misclicks:14|exito:false
