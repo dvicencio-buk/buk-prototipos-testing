@@ -1,0 +1,10 @@
+timestamp,evento,pantalla,participante_nombre,participante_email,tiempo_s,detalle
+2026-05-26T13:58:03.159Z,task_started,intro,asoifdinsao,sajdasnj@skdjafafdsj.com,0,crear-automatizacion-workflow
+2026-05-26T13:58:03.186Z,screen_viewed,index,asoifdinsao,sajdasnj@skdjafafdsj.com,0,
+2026-05-26T13:58:57.601Z,goal_clicked,index,asoifdinsao,sajdasnj@skdjafafdsj.com,54,cta_crear_automatizacion
+2026-05-26T13:58:57.626Z,screen_viewed,form,asoifdinsao,sajdasnj@skdjafafdsj.com,54,
+2026-05-26T13:58:58.834Z,task_abandoned,form,asoifdinsao,sajdasnj@skdjafafdsj.com,56,tiempo:56s|misclicks:0|exito:false
+2026-05-26T13:59:00.255Z,screen_viewed,index,asoifdinsao,sajdasnj@skdjafafdsj.com,57,
+2026-05-26T14:02:02.734Z,goal_clicked,index,asoifdinsao,sajdasnj@skdjafafdsj.com,240,cta_crear_automatizacion
+2026-05-26T14:02:02.760Z,screen_viewed,form,asoifdinsao,sajdasnj@skdjafafdsj.com,240,
+2026-05-26T14:02:05.242Z,task_abandoned,form,asoifdinsao,sajdasnj@skdjafafdsj.com,242,tiempo:242s|misclicks:0|exito:false
